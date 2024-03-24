@@ -1,0 +1,7 @@
+export const navbar = {
+  '.navbar': {
+    padding: 'var(--navbar-padding, 0.5rem)',
+    'min-height': '4rem',
+    '@apply w-full': {},
+  },
+}

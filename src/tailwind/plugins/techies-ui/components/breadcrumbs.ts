@@ -1,0 +1,15 @@
+export const breadcrumbs = {
+  '.breadcrumbs': {
+    '@apply max-w-full overflow-x-auto': {},
+    '& > ul, & > ol': {
+      '@apply flex items-center whitespace-nowrap': {},
+      'min-height': 'min-content',
+      '& > li': {
+        '@apply flex items-center': {},
+        '& > a': {
+          '@apply flex cursor-pointer items-center hover:underline': {},
+        },
+      },
+    },
+  },
+}

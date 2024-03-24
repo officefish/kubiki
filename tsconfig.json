@@ -1,0 +1,64 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@modules/*": [
+        "./src/server/modules/*"
+      ],
+      "@client/*": [
+        "./src/client/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "./src/pages/**/*.ts",
+    "./src/pages/**/*.tsx",
+    "./src/client/**/*.ts",
+    "./src/client/**/*.tsx",
+    "./src/tailwind/**/*.ts",
+    "./src/server/**/*.ts",
+    "./src/shared/**/*.ts",
+    "./src/shared/**/*.tsx",
+    "./vitest/**/*.ts",
+    "./@types/**/*.d.ts",
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}

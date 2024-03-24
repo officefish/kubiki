@@ -1,0 +1,10 @@
+export const divider = {
+  '.divider': {
+    '@apply flex flex-row items-center self-stretch': {},
+    '&:before, &:after': {
+      content: "''",
+      '@apply flex-grow': {},
+      '@apply h-0.5 w-full': {},
+    },
+  },
+}
