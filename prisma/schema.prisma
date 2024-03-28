@@ -26,9 +26,6 @@ model User {
   avatar        Avatar? 
   cover         Cover?
   tartan        Tartan?
-  challenges    Challenge[]
-  artworks      Artwork[]
-  scores        Score[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
@@ -137,98 +134,3 @@ model Tartan {
   hashed     String? 
   url        String? 
 }
-
-
-enum ChallengeStatus {
-  BOOKED
-  OPEN
-  CLOSED
-}
-
-model Challenge {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  creator       User        @relation(fields:[creatorId], references:[id]) 
-  creatorId     String      @db.ObjectId @unique
-  title         String      
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  status        ChallengeStatus @default(OPEN)  
-  artworks      Artwork[] 
-  categories    Category[]
-  scores        Score[]
-}
-
-model Category {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  challenge     Challenge   @relation(fields:[challengeId], references:[id]) 
-  challengeId   String      @db.ObjectId @unique
-  title         String
-}
-
-enum Sex {
-  MALE
-  FEMALE
-}
-
-
-model Author {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName       String?
-  lastName        String?
-  sex             Sex       @default(MALE)
-  age             Int       @default(12)
-  artworks        Artwork[]
-}
-
-enum AgeGroup {
-  KIDS // 4-5 years
-  PRESCHOOL // 6-7 years
-  YOUNGEST  // 8-10 years
-  AVERAGE // 11-14 years
-  OLDER // 15-17 years old
-}
-
-model Artwork {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  challenge     Challenge   @relation(fields:[challengeId], references:[id]) 
-  challengeId   String      @db.ObjectId @unique
-  publisher     User        @relation(fields:[publisherId], references:[id]) 
-  publisherId   String      @db.ObjectId @unique
-  author        Author      @relation(fields:[authorId], references:[id]) 
-  authorId      String      @db.ObjectId @unique
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  url           String?  
-  original      String?
-  scores        Score[]
-  likes         Like[]    
-  ageGroup      AgeGroup    @default(AVERAGE)
-  total         Int         @default(0)
-}
-
-model Like {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  artwork         Artwork           @relation(fields:[artworkId], references:[id]) 
-  artworkId       String            @db.ObjectId @unique
-  ip              String
-}
-
-model Score {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  judge           User              @relation(fields:[judgeId], references:[id]) 
-  judgeId         String            @db.ObjectId @unique
-  challenge       Challenge         @relation(fields:[challengeId], references:[id]) 
-  challengeId     String            @db.ObjectId @unique
-  artwork         Artwork           @relation(fields:[artworkId], references:[id]) 
-  artworkId       String            @db.ObjectId @unique
-  categoryScores  CategoryScore[]
-  total           Int               @default(0)
-}
-
-model CategoryScore {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  score         Score       @relation(fields:[scoreId], references:[id]) 
-  scoreId       String      @db.ObjectId @unique
-  value         Int         @default(0)
-  title         String
-} 

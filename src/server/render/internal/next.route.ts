@@ -28,12 +28,7 @@ export async function nextRoutes(app: INestApplication) {
   server.next('/auth/forgot-password')
   server.next('/auth/password-reset/*')
 
-  server.next('/challenges')
-  server.next('/challenge/[:id]')
-
   server.next('/admin')
-
-  server.next('/initial')
 
   Logger.log('NEST endpoints register', 'Render')
 }
