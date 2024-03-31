@@ -1,11 +1,11 @@
-//import { MyProfile } from '@client/components/screens/profile'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import Providers, {
   BackendAddressProvider,
   useBackendAddressStore,
 } from '@client/providers'
-import MinProfile from '@/client/screens/profile/minimum'
+//import MinProfile from '@/client/screens/profile/minimum'
+import { MyProfile } from '@/client/screens/profile'
 import { GetServerSideProps } from 'next'
 import { useEffect } from 'react'
 import { IBackendMinimum } from '@/client/utilities/backend.min.types'
@@ -18,7 +18,7 @@ const ProfilePage: NextPageWithLayout<IBackendMinimum> = ({ host, port }) => {
     setPort(port)
   }, [host, port, setHost, setPort])
 
-  return <MinProfile />
+  return <MyProfile />
 }
 export default ProfilePage
 
