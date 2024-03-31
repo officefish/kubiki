@@ -13,15 +13,6 @@ import { AuthModule } from '@modules/rest/auth/auth.module'
 import { UserModule } from '@modules/rest/user/user.module'
 import { UploadModule } from '@modules/rest/upload/upload.module'
 
-import { ChallengeModule } from '@modules/rest/challenge/challenge.module'
-import { ArtworkModule } from '../rest/artwork/artwork.module'
-
-//import { ServeStaticModule } from '@nestjs/serve-static'
-//import { join } from 'path'
-
-//import Next from 'next'
-//import { RenderModule } from 'nest-next'
-
 @Module({
   imports: [
     CoreModule,
@@ -32,15 +23,6 @@ import { ArtworkModule } from '../rest/artwork/artwork.module'
     UserModule,
     AuthModule,
     UploadModule,
-    ChallengeModule,
-    ArtworkModule,
-    //RenderModule.forRootAsync(Next({})),
-    //ServeStaticModule.forRoot({
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    //rootPath: require('app-root-path').resolve('/public'),
-    //  rootPath: join(__dirname, '..', 'client'),
-    //  renderPath: '/src/public/*',
-    //}),
   ],
   controllers: [AppController],
   providers: [AppService],

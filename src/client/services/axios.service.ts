@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -292,15 +292,9 @@ export const useAxiosPostTrigger = <T = object>({
   withCredentials = true,
 } = {}) => {
   const { host, port } = useBackendAddressStore()
-  //const [baseUrl, setBaseUrl] = useState('')
 
-  const [serverError, setServerError] = useState<Error | undefined>(undefined)
+  const [serverError, setServerError] = useState<AxiosError | undefined>()
   const [data, setData] = useState<T | null>()
-
-  // useEffect(() => {
-  //   const url = `${protocol}://${host}:${port}/${api}`
-  //   setBaseUrl(url)
-  // }, [api, host, port, protocol])
 
   const handleResponseData = useCallback(
     (data: T) => {

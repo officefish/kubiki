@@ -1,4 +1,4 @@
-import PasswordReset from '@client/components/screens/auth/password-reset'
+import PasswordReset from '@client/screens/auth/password-reset'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import type { GetServerSideProps } from 'next'

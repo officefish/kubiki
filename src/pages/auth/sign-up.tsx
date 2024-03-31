@@ -1,4 +1,4 @@
-import SignUp from '@client/components/screens/auth/sign-up'
+import SignUp from '@client/screens/auth/sign-up'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import Providers, { BackendAddressProvider } from '@client/providers'

@@ -1,4 +1,4 @@
-import SignIn from '@client/components/screens/auth/sign-in'
+import SignIn from '@client/screens/auth/sign-in'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import Providers, {

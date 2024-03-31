@@ -5,6 +5,7 @@ module.exports = {
   content: {
     files: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/client/screens/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/client/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/client/app/**/*.{js,ts,jsx,tsx,mdx}",
     { raw: '' },

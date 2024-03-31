@@ -52,11 +52,11 @@ export class AuthController {
     type: SignInSuccessDto,
   })
   @ApiResponse({
-    status: 400,
+    status: 403,
     description: SignInValidationFailedDesc,
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'UNAUTHORIZED',
     type: FailDto,
   })
@@ -120,11 +120,12 @@ export class AuthController {
       authenticated: true,
       role: user?.role,
     } as SignInSuccessPayload
+
     if (jwtToken) {
       payload.accessToken = jwtToken
     }
 
-    return reply.code(201).send({ statusCode: 201, payload })
+    return reply.code(201).send({ statusCode: 201, user: payload })
   }
 
   @Post('sign-up')

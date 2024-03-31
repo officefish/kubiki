@@ -151,53 +151,6 @@ export class UserService {
     /* delete sessions */
     await this.prisma.session.deleteMany({ where: { userId: user.id } })
 
-    /* start delete challenges */
-    const challenges = await this.prisma.challenge.findMany({
-      where: { creatorId: user.id },
-    })
-
-    /* delete likes and scores */
-    for (let i = 0; i < challenges.length; i++) {
-      const challenge = challenges[i]
-      const artworks = await this.prisma.artwork.findMany({
-        where: { challengeId: challenge.id },
-      })
-
-      for (let j = 0; j < artworks.length; j++) {
-        const artwork = artworks[j]
-
-        const scores = await this.prisma.score.findMany({
-          where: { artworkId: artwork.id },
-        })
-
-        /* delete category scores */
-        for (let k = 0; k < scores.length; k++) {
-          const score = scores[k]
-          await this.prisma.categoryScore.deleteMany({
-            where: { scoreId: score.id },
-          })
-        }
-
-        await this.prisma.score.deleteMany({
-          where: { artworkId: artwork.id },
-        })
-        await this.prisma.like.deleteMany({
-          where: { artworkId: artwork.id },
-        })
-      }
-    }
-
-    /* delete artworks */
-    for (let i = 0; i < challenges.length; i++) {
-      const challenge = challenges[i]
-      await this.prisma.artwork.deleteMany({
-        where: { challengeId: challenge.id },
-      })
-    }
-
-    /* delete challenges themeselfes */
-    await this.prisma.challenge.deleteMany({ where: { creatorId: user.id } })
-
     /* finally delete user*/
     return this.prisma.user.delete({
       where,

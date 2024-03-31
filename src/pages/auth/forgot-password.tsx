@@ -1,4 +1,4 @@
-import ForgotPassword from '@client/components/screens/auth/forgot-password'
+import ForgotPassword from '@client/screens/auth/forgot-password'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import Providers, { BackendAddressProvider } from '@client/providers'

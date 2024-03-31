@@ -4,7 +4,7 @@ import Providers, {
   BackendAddressProvider,
   useBackendAddressStore,
 } from '@client/providers'
-import AdminPanel from '@/client/components/screens/admin'
+import AdminPanel from '@/client/screens/admin'
 import { useEffect } from 'react'
 import { IBackendMinimum } from '@/client/utilities/backend.min.types'
 import { GetServerSideProps } from 'next'

@@ -5,7 +5,7 @@ import Providers, {
   BackendAddressProvider,
   useBackendAddressStore,
 } from '@client/providers'
-import MinProfile from '@/client/components/screens/profile/minimum'
+import MinProfile from '@/client/screens/profile/minimum'
 import { GetServerSideProps } from 'next'
 import { useEffect } from 'react'
 import { IBackendMinimum } from '@/client/utilities/backend.min.types'

@@ -1,4 +1,4 @@
-import ProfileSettings from '@client/components/screens/profile/settings'
+import ProfileSettings from '@client/screens/profile/settings'
 import { NextPageWithLayout } from '@client/utilities/layout.types'
 import Layout from '@client/components/layout/Layout'
 import Providers, {
