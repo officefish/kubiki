@@ -37,16 +37,16 @@ const nextConfig = {
       },
     ]
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: '**',
-        port: '',
-        pathname: '**',
-      },
-    ],
-  },
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: 'http',
+  //       hostname: '**',
+  //       port: '',
+  //       pathname: '**',
+  //     },
+  //   ],
+  // },
   // experimental: {
   //   swcPlugins: [['typewind/swc', {}]],
   // },

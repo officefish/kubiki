@@ -1,10 +1,7 @@
 import { FC, MouseEvent } from 'react'
 import { UserMin } from '@client/models/user.model'
 
-//import Image from 'next/image'
-
 import { NavigationButton, StyledUserName } from './styled-header'
-//import { CoverImage } from './styled-header'
 
 import { useRouter } from 'next/router'
 
@@ -27,15 +24,9 @@ const UserItem: FC<UserMin> = ({ name, avatar }) => {
       <div className="avatar">
         <div className="w-6 mask mask-squircle">
           {avatar && (
-            // <Image
-            //   alt="avatar"
-            //   src={avatar}
-            //   width={24}
-            //   height={24}
-            //   className="w-6 mask mask-squircle"
-            // />
             <div className="w-6 h-6 relative">
-              <img src={avatar} onError={handleImageError} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img alt="small avatar" src={avatar} onError={handleImageError} />
             </div>
           )}
         </div>
@@ -44,7 +35,5 @@ const UserItem: FC<UserMin> = ({ name, avatar }) => {
     </NavigationButton>
   )
 }
-
-//<Link className='ml-5 mr-2 hover:text-cyan-500 cursor-pointer text-lg whitespace-nowrap' href='/me'>{name}.</Link>
 
 export default UserItem
