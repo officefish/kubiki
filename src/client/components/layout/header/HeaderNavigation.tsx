@@ -25,8 +25,6 @@ import { DropdownArrow } from '@/client/components/ui/svg'
 import { useUserStore } from '@/client/providers/auth-user-provider'
 import { useCurrentUserSWR } from '@/client/services/user-profile.service'
 
-//import avatar from '@public/team-2-800x800.jpg'
-
 const HeaderNavigation: FC = () => {
   const router = useRouter()
   const href = '/auth/sign-in'
@@ -80,20 +78,16 @@ const HeaderNavigation: FC = () => {
         </NavigationButton>
         <DropdownContent>
           <DropdownContentGrid>
-            {modes && (
-              <>
-                {modes.map((item, i) => {
-                  return (
-                    <DropdownListButton
-                      key={i}
-                      item={item}
-                      active={item === mode}
-                      onClick={handleMode}
-                    />
-                  )
-                })}
-              </>
-            )}
+            {modes?.map((item, i) => {
+              return (
+                <DropdownListButton
+                  key={i}
+                  item={item}
+                  active={item === mode}
+                  onClick={handleMode}
+                />
+              )
+            })}
           </DropdownContentGrid>
         </DropdownContent>
       </StyledDropdown>
