@@ -223,15 +223,6 @@ export class UserController {
         .send({ statusCode: 401, message: 'User not found' })
     }
 
-    const basicInfo = await this.service.basicInfo({ userId: id })
-    if (!basicInfo) {
-      const userProfile = { basicInfo: null, quote: null, domain: null }
-      return reply.code(200).send({ code: 200, userProfile })
-    }
-
-    const basicInfoJson = await this.service.basicInfoJson(basicInfo.id)
-    const quote = await this.service.quote({ userId: id })
-    const domain = await this.service.domain({ userId: id })
     let avatarData = { imageUrl: this.env.getAvatarUrl(), id: null }
     const avatar = await this.service.avatar({ userId: id })
     if (avatar) {
@@ -251,6 +242,23 @@ export class UserController {
       tartanData.url = tartan.url
       tartanData.pattern = tartan.pattern
     }
+
+    const basicInfo = await this.service.basicInfo({ userId: id })
+    if (!basicInfo) {
+      const userProfile = {
+        basicInfo: null,
+        quote: null,
+        domain: null,
+        avatar: avatarData,
+        cover: coverData,
+        tartan: tartanData,
+      }
+      return reply.code(200).send({ code: 200, userProfile })
+    }
+
+    const basicInfoJson = await this.service.basicInfoJson(basicInfo.id)
+    const quote = await this.service.quote({ userId: id })
+    const domain = await this.service.domain({ userId: id })
 
     const userProfile = {
       basicInfo: basicInfoJson,
