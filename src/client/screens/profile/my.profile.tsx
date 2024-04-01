@@ -1,5 +1,8 @@
 import { FC } from 'react'
-import { useUserProfile } from '@client/services/user-profile.service'
+import {
+  //useUserProfile,
+  useUserProfileSWR,
+} from '@client/services/user-profile.service'
 
 import {
   Cover,
@@ -13,7 +16,6 @@ import {
 import { IHeaderStatsData } from '@client/models/profile.types'
 
 import { ProfileDelimeter } from './styled-profile'
-import { useBackendAddressStore } from '@/client/providers'
 
 //const background =
 //  'https://images.unsplash.com/photo-1499336315816-097655dcfbda'
@@ -25,8 +27,7 @@ const headerData: IHeaderStatsData = {
 }
 
 const MyProfile: FC = () => {
-  const { host, port } = useBackendAddressStore()
-  const { userProfile } = useUserProfile(host, port)
+  const { userProfile } = useUserProfileSWR()
 
   return (
     <>

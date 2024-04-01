@@ -1,5 +1,5 @@
 //import Link from 'next/link'
-import { FC, MouseEvent, useState, useEffect, useCallback } from 'react'
+import { FC, MouseEvent, useState, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -23,9 +23,7 @@ import {
 
 import { DropdownArrow } from '@/client/components/ui/svg'
 import { useUserStore } from '@/client/providers/auth-user-provider'
-import { useBackendAddressStore } from '@/client/providers'
-import axios from 'axios'
-import { User } from '@/client/models/user.model'
+import { useCurrentUserSWR } from '@/client/services/user-profile.service'
 
 //import avatar from '@public/team-2-800x800.jpg'
 
@@ -45,56 +43,19 @@ const HeaderNavigation: FC = () => {
     setIsValid: setIsValidUser,
   } = useUserStore()
 
-  const { host, port } = useBackendAddressStore()
-  const [userUrl, setUserUrl] = useState('')
+  const { user: userData, invalidate } = useCurrentUserSWR()
 
   useEffect(() => {
-    const url = `http://${host}:${port}/api/v1/user/me`
-    setUserUrl(url)
-    setIsValidUser(false)
-  }, [host, port, setIsValidUser])
-
-  const [serverError, setServerError] = useState<Error | undefined>(undefined)
-
-  const handleResponseUser = useCallback(
-    (data: User) => {
-      console.log(data.id)
-      setUser(data)
-      setIsValidUser(true)
-    },
-    [setUser, setIsValidUser],
-  ) // Dependency on setUser only
-
-  const handleErrorUser = useCallback(
-    (error: Error) => {
-      console.error(error)
-      setUser(null)
-      setIsValidUser(true)
-    },
-    [setUser, setIsValidUser],
-  ) // Dependency on setUser only
-
-  const onSubmitUser = useCallback(() => {
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
+    if (!isValidUser) {
+      invalidate()
     }
-    axios
-      .get(userUrl, options)
-      .then((response) => handleResponseUser(response.data))
-      .catch((error) => setServerError(error))
-  }, [userUrl, handleResponseUser])
+  }, [invalidate, isValidUser])
 
   useEffect(() => {
-    if (isValidUser) return
-    onSubmitUser()
-  }, [isValidUser, onSubmitUser])
-
-  useEffect(() => {
-    if (serverError) handleErrorUser(serverError)
-  }, [handleErrorUser, serverError])
+    if (!userData) return
+    setUser(userData)
+    setIsValidUser(true)
+  }, [setIsValidUser, setUser, userData])
 
   const { mode, setMode, modes } = useSystemColorSchemas()
 

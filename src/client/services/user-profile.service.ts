@@ -1,7 +1,9 @@
-import { useAxiosFetcher_GET, useAxios_POST_RawData } from './axios.service'
-import useSWR from 'swr'
+import { useCallback, useEffect, useState } from 'react'
+import { useAxiosGetTrigger, useAxios_POST_RawData } from './axios.service'
 
-import { IUserProfile } from '@client/models/user.model'
+import { IUserProfile, User } from '@client/models/user.model'
+import { AxiosError } from 'axios'
+import useTimeout from '../hooks/timeout'
 interface ISuccessResponse {
   status?: string
   statusCode?: number
@@ -28,23 +30,101 @@ export const useUpdateProfile = (host: string, port: number) => {
   }
 }
 
-export const useUserProfile = (host: string, port: number) => {
-  const route = DIRECTORY
-  const key = `${API_PREFIX}/${route}`
+interface IUserProfileResponse {
+  code: string
+  userProfile: IUserProfile
+}
 
-  const { fetcher } = useAxiosFetcher_GET({
-    host,
-    port,
-    api: API_PREFIX,
-    route,
-  })
+export function useUserProfile() {
+  const { data, serverError, trigger } =
+    useAxiosGetTrigger<IUserProfileResponse>({
+      route: 'user/profile',
+    })
+
+  return { userProfile: data?.userProfile, serverError, trigger }
+}
+
+export function useUserProfileSWR(valid: boolean = false) {
+  const [isValid, setIsValid] = useState(valid)
 
   const {
-    data: userProfile,
-    error,
-    isValidating,
-    mutate,
-  } = useSWR<IUserProfile>(key, fetcher)
+    userProfile: userProfileData,
+    serverError,
+    trigger,
+  } = useUserProfile()
 
-  return { userProfile, error, isValidating, mutate }
+  const [userProfile, setUserProfile] = useState<IUserProfile>()
+  const [error, setError] = useState<AxiosError | Error>()
+
+  useEffect(() => {
+    if (isValid) return
+    setIsValid(true)
+    trigger()
+  }, [isValid, trigger])
+
+  useEffect(() => {
+    setError(serverError)
+  }, [serverError])
+
+  const invalidate = useCallback(() => {
+    setIsValid(false)
+  }, [setIsValid])
+
+  const { clear } = useTimeout(invalidate, 2000)
+
+  useEffect(() => {
+    if (!userProfileData) return
+    setUserProfile(userProfileData)
+    setIsValid(true)
+    clear()
+  }, [clear, userProfileData])
+
+  return { userProfile, error, invalidate }
+}
+
+interface IUserResponse {
+  code: string
+  user: User
+}
+
+export function useCurrentUser() {
+  const { data, serverError, trigger } = useAxiosGetTrigger<IUserResponse>({
+    route: 'user/me',
+  })
+
+  return { user: data?.user, serverError, trigger }
+}
+
+export function useCurrentUserSWR(valid: boolean = false) {
+  const [isValid, setIsValid] = useState(valid)
+
+  const { user: userData, serverError, trigger } = useCurrentUser()
+
+  const [user, setUser] = useState<User>()
+  const [error, setError] = useState<AxiosError | Error>()
+
+  useEffect(() => {
+    if (isValid) return
+    setIsValid(true)
+    trigger()
+  }, [isValid, trigger])
+
+  useEffect(() => {
+    setError(serverError)
+  }, [serverError])
+
+  const invalidate = useCallback(() => {
+    setIsValid(false)
+  }, [setIsValid])
+
+  const { clear } = useTimeout(invalidate, 2000)
+
+  useEffect(() => {
+    if (!userData) return
+    setUser(userData)
+    setIsValid(true)
+    clear()
+  }, [clear, userData])
+
+  return { user, error, invalidate }
 }

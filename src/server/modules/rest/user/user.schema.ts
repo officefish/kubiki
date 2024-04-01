@@ -101,7 +101,7 @@ const tartan = z.object({
   svgSrc: z.string().optional(),
 })
 
-const UpsetProfileSchema = z.object({
+const profile = z.object({
   basicInfo: basicInfo.optional(),
   quote: quote.optional(),
   domain: domain.optional(),
@@ -109,6 +109,8 @@ const UpsetProfileSchema = z.object({
   cover: cover.optional(),
   tartan: tartan.optional(),
 })
+
+const UpsetProfileSchema = profile
 
 const UpdateRoleSchema = z.object({
   id: z.string(),
@@ -119,6 +121,14 @@ const DeleteUserSchema = z.object({
   id: z.string(),
 })
 
+const SuccessProfileResponseSchema = z.object({
+  userProfile: profile,
+  code: z.string(),
+})
+
+export class SuccessProfileResponseDto extends createZodDto(
+  SuccessProfileResponseSchema,
+) {}
 export class UpsetProfileDto extends createZodDto(UpsetProfileSchema) {}
 export class GetDomainDto extends createZodDto(domain) {}
 export class UpdateRoleDto extends createZodDto(UpdateRoleSchema) {}

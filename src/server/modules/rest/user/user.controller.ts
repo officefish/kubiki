@@ -18,6 +18,7 @@ import {
   GetDomainDto,
   UpdateRoleDto,
   DeleteUserDto,
+  SuccessProfileResponseDto,
 } from './user.schema'
 //import { getTartanAsRender } from '../../../../shared/services/tartan/svg-data.builder'
 //'@/shared/services/tartan/svg-data.builder'
@@ -189,7 +190,7 @@ export class UserController {
       avatarUrl = avatar.url
     }
 
-    const payload = {
+    const userData = {
       id: user?.id,
       email: user?.email,
       name: user?.name,
@@ -198,20 +199,16 @@ export class UserController {
       role: user?.role,
       avatar: avatarUrl,
     }
-    reply.code(201).send(payload)
+
+    reply.code(200).send({ code: 200, user: userData })
   }
 
   @UseGuards(AuthGuard)
   @ApiResponse({
-    status: 201,
+    status: 200,
     description: 'SUCCESS',
-    type: UpsetProfileDto,
+    type: SuccessProfileResponseDto,
   })
-  // // @ApiResponse({
-  // //   status: 401,
-  // //   description: 'User not found.',
-  // //   //type: UpsetProfileDto,
-  // // })
   @Get('profile')
   async getCurrentUserProfile(
     @Req() request: FastifyRequest,
@@ -228,9 +225,8 @@ export class UserController {
 
     const basicInfo = await this.service.basicInfo({ userId: id })
     if (!basicInfo) {
-      return reply
-        .code(201)
-        .send({ basicInfo: null, quote: null, domain: null })
+      const userProfile = { basicInfo: null, quote: null, domain: null }
+      return reply.code(200).send({ code: 200, userProfile })
     }
 
     const basicInfoJson = await this.service.basicInfoJson(basicInfo.id)
@@ -256,7 +252,7 @@ export class UserController {
       tartanData.pattern = tartan.pattern
     }
 
-    const payload = {
+    const userProfile = {
       basicInfo: basicInfoJson,
       quote: { content: quote.content },
       domain: { value: domain.value },
@@ -264,7 +260,7 @@ export class UserController {
       cover: coverData,
       tartan: tartanData,
     }
-    reply.code(201).send(payload)
+    reply.code(200).send({ code: 200, userProfile })
   }
 
   @Get('domain/:value')

@@ -495,15 +495,9 @@ export const useAxiosGetTrigger = <T = object>({
   withCredentials = true,
 } = {}) => {
   const { host, port } = useBackendAddressStore()
-  const [baseUrl, setBaseUrl] = useState('')
 
   const [serverError, setServerError] = useState<Error | undefined>(undefined)
   const [data, setData] = useState<T>()
-
-  useEffect(() => {
-    const url = `${protocol}://${host}:${port}/${api}`
-    setBaseUrl(url)
-  }, [api, host, port, protocol])
 
   const handleResponseData = useCallback(
     (data: T) => {
@@ -528,14 +522,24 @@ export const useAxiosGetTrigger = <T = object>({
         headers,
         withCredentials,
       }
-      let url = `${baseUrl}/${route}`
+      let url = `${protocol}://${host}:${port}/${api}/${route}`
       if (input) url += `/${input}`
       axios
         .get(url, options)
         .then((response) => handleResponseData(response.data))
         .catch((error) => setServerError(error))
     },
-    [baseUrl, data, handleResponseData, headers, route, withCredentials],
+    [
+      api,
+      data,
+      handleResponseData,
+      headers,
+      host,
+      port,
+      protocol,
+      route,
+      withCredentials,
+    ],
   )
 
   const trigger = useCallback(

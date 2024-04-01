@@ -8,11 +8,11 @@ import StatusSettings from './status'
 
 import { StyledSettingsTab } from '../styled-profile'
 
-import { useUserProfile } from '@client/services/user-profile.service'
+import { useUserProfileSWR } from '@client/services/user-profile.service'
 
 //const avatar = '/public/team-2-800x800.jpg'
 import VisualsSettings from './visuals'
-import { useBackendAddressStore, useUserProfileStore } from '@/client/providers'
+import { useUserProfileStore } from '@/client/providers'
 import EditProfileLayout from '../components/edit-profile.layout'
 //const background =
 //  'https://images.unsplash.com/photo-1499336315816-097655dcfbda'
@@ -28,8 +28,8 @@ enum ESettingsMode {
 
 const ProfileSettings: FC = () => {
   //const { mutate } = useOnlyWithUser()
-  const { host, port } = useBackendAddressStore()
-  const { userProfile } = useUserProfile(host, port)
+  const { userProfile } = useUserProfileSWR(false)
+
   const {
     setFullName,
     setCareer,
