@@ -1,8 +1,5 @@
 import { FC } from 'react'
-import {
-  //useUserProfile,
-  useUserProfileSWR,
-} from '@client/services/user-profile.service'
+import { useUserProfileSWR } from '@client/services/user-profile.service'
 
 import {
   Cover,
@@ -16,6 +13,7 @@ import {
 import { IHeaderStatsData } from '@client/models/profile.types'
 
 import { ProfileDelimeter } from './styled-profile'
+import CoverTartan from './components/tartan-cover'
 
 //const background =
 //  'https://images.unsplash.com/photo-1499336315816-097655dcfbda'
@@ -34,6 +32,7 @@ const MyProfile: FC = () => {
       {userProfile ? (
         <div className="relative">
           <Cover background={userProfile.cover?.imageUrl} />
+          <CoverTartan url={userProfile.tartan?.url} />
           <ProfileLayout avatar={userProfile.avatar?.imageUrl}>
             <Header stats={headerData} />
             <BasicInfo data={userProfile.basicInfo} />

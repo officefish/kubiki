@@ -8,7 +8,10 @@ import {
   StyledSettingsLabel,
 } from '../../../styled-profile'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 import { ITartanPatternColors } from '@client/models/profile.types'
 import TartanPicker from './tartan-picker'
@@ -17,6 +20,7 @@ const VisualsTartan: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const { tartan, setTartan, invalidTartan } = useUserProfileStore()
+  //const { setPath } = useUserProfileEditorStore()
 
   const setColors = (newColors: ITartanPatternColors) => {
     if (tartan === undefined) return
@@ -27,13 +31,20 @@ const VisualsTartan: FC = () => {
     })
     invalidTartan()
   }
-
   const handleCollabse = (newIsCollapsed: boolean) => {
     setIsCollapsed(newIsCollapsed)
   }
 
+  const { setPath } = useUserProfileEditorStore()
+  const [path] = useState(['Visuals', 'Tartan'])
+
   return (
-    <CollapseSection name="Tartan" onCollapse={handleCollabse}>
+    <CollapseSection
+      name="Tartan"
+      onCollapse={handleCollabse}
+      path={path}
+      setPath={setPath}
+    >
       <StyledSettingsDiv>
         <StyledSettingsField>
           <StyledSettingsLabel>Tartan pattern:</StyledSettingsLabel>

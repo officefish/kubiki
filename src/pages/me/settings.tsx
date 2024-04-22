@@ -4,6 +4,7 @@ import Layout from '@client/components/layout/Layout'
 import Providers, {
   BackendAddressProvider,
   ProfileSettingsProvider,
+  ProfileSettingsEditorProvider,
 } from '@client/providers'
 
 const ProfilePage: NextPageWithLayout = () => {
@@ -15,9 +16,11 @@ ProfilePage.getLayout = function getLayout(page: React.ReactElement) {
   return (
     <Providers themeProps={ProfilePage.theme}>
       <ProfileSettingsProvider>
-        <BackendAddressProvider>
-          <Layout title="Profile">{page}</Layout>
-        </BackendAddressProvider>
+        <ProfileSettingsEditorProvider>
+          <BackendAddressProvider>
+            <Layout title="Profile">{page}</Layout>
+          </BackendAddressProvider>
+        </ProfileSettingsEditorProvider>
       </ProfileSettingsProvider>
     </Providers>
   )

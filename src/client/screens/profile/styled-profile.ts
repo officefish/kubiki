@@ -27,6 +27,21 @@ export const CoverImage = styled(CoverImageTW)<WithBackground>`
     p.$background ? 'background-image: url("' + p.$background + '")' : ''}
 `
 
+const TartanTW = tw.div`
+absolute 
+top-0 
+w-full h-full 
+bg-repeat
+bg-auto
+mt-[1px]
+brightness-75
+`
+
+export const StyledTartan = styled(TartanTW)<WithBackground>`
+  ${(p) =>
+    p.$background ? 'background-image: url("' + p.$background + '")' : ''}
+`
+
 /* Profile styles */
 export const StyledProfileLayout = tw.section`
 absolute 
@@ -162,6 +177,15 @@ interface IsActive {
 
 export const SettingsButton = tw.button<IsActive>`
 btn btn-ghost gap-2
+text-base-content/50
+dark:text-base-content-dark/50
+hover:text-base-content
+hover:dark:text-base-content-dark
+${(p) => (p.$active ? 'btn-ghost' : 'btn-neutral')}
+`
+
+export const CancelButton = tw.button<IsActive>`
+btn btn-warning gap-2
 text-base-content/50
 dark:text-base-content-dark/50
 hover:text-base-content

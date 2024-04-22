@@ -1,6 +1,9 @@
 import { FC, useState, ChangeEvent, useEffect } from 'react'
 import useComponentOutside from '@client/hooks/component-outside'
-import { useUserProfileStore } from '@/client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@/client/providers'
 
 import {
   StyledCollapseSection,
@@ -20,6 +23,7 @@ const BasicInfoFullname: FC = () => {
   const [forseCollapse, setForseCollapse] = useState(false)
 
   const { fullName, setFullName, invalidFullName } = useUserProfileStore()
+  const { setPath } = useUserProfileEditorStore()
 
   const setFirstName = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -35,7 +39,13 @@ const BasicInfoFullname: FC = () => {
 
   useEffect(() => {
     setForseCollapse(!isComponentOutside)
-  }, [isComponentOutside])
+  }, [isComponentOutside, setPath])
+
+  useEffect(() => {
+    if (forseCollapse) {
+      setPath(['Basic info', 'Fullname'])
+    }
+  }, [forseCollapse, setPath])
 
   return (
     <StyledCollapseSection ref={ref} $forceCollapse={forseCollapse}>

@@ -11,6 +11,11 @@ export {
 } from './profile-settings-provider'
 
 export {
+  ProfileSettingsEditorProvider,
+  useUserProfileEditorStore,
+} from './profile-settings-provider/editor'
+
+export {
   BackendAddressProvider,
   useBackendAddressStore,
 } from './backend-address-provider'

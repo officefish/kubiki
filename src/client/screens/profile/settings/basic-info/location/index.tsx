@@ -14,7 +14,10 @@ import TimeZonePicker from './timezone.picker'
 import CountryPicker from './country.picker'
 import RegionPicker from './region.picker'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 const BasicInfoLocation: FC = () => {
   const { ref, isComponentOutside } = useComponentOutside(true)
@@ -37,9 +40,16 @@ const BasicInfoLocation: FC = () => {
     invalidLocation()
   }
 
+  const { setPath } = useUserProfileEditorStore()
   useEffect(() => {
     setForseCollapse(!isComponentOutside)
   }, [isComponentOutside])
+
+  useEffect(() => {
+    if (forseCollapse) {
+      setPath(['Basic info', 'Location'])
+    }
+  }, [forseCollapse, setPath])
 
   return (
     <StyledCollapseSection ref={ref} $forceCollapse={forseCollapse}>

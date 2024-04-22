@@ -11,7 +11,10 @@ import {
   StyledSettingsLabel,
 } from '../../styled-profile'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 const StatusQuote: FC = () => {
   const { ref, isComponentOutside } = useComponentOutside(true)
@@ -28,6 +31,13 @@ const StatusQuote: FC = () => {
   useEffect(() => {
     setForseCollapse(!isComponentOutside)
   }, [isComponentOutside])
+
+  const { setPath } = useUserProfileEditorStore()
+  useEffect(() => {
+    if (forseCollapse) {
+      setPath(['Status', 'Quote'])
+    }
+  }, [forseCollapse, setPath])
 
   return (
     <StyledCollapseSection ref={ref} $forceCollapse={forseCollapse}>

@@ -13,7 +13,10 @@ import {
   StyledSettingsInput,
 } from '../../styled-profile'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 const StatusDomain: FC = () => {
   const { ref, isComponentOutside } = useComponentOutside(true)
@@ -30,6 +33,13 @@ const StatusDomain: FC = () => {
   useEffect(() => {
     setForseCollapse(!isComponentOutside)
   }, [isComponentOutside])
+
+  const { setPath } = useUserProfileEditorStore()
+  useEffect(() => {
+    if (forseCollapse) {
+      setPath(['Status', 'Domain'])
+    }
+  }, [forseCollapse, setPath])
 
   return (
     <StyledCollapseSection ref={ref} $forceCollapse={forseCollapse}>

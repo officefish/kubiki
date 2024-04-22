@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import CollapseSection from '../../ui/collapse.section'
 
@@ -10,7 +10,10 @@ import {
 
 import CoverPicker from './cover.picker'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 const VisualsCover: FC = () => {
   //const [imageUrl, setImageUrl] = useState(coverSrc)
@@ -25,9 +28,11 @@ const VisualsCover: FC = () => {
 
     invalidCover()
   }
+  const { setPath } = useUserProfileEditorStore()
+  const [path] = useState(['Visuals', 'Cover'])
 
   return (
-    <CollapseSection name="Cover">
+    <CollapseSection name="Cover" path={path} setPath={setPath}>
       <StyledSettingsDiv>
         <StyledSettingsField>
           <StyledSettingsLabel>Cover image source:</StyledSettingsLabel>

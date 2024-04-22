@@ -1,6 +1,7 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import CollapseSection from '../../ui/collapse.section'
+import { useUserProfileEditorStore } from '@client/providers'
 
 import {
   StyledSettingsDiv,
@@ -35,8 +36,11 @@ const VisualsAvatar: FC = () => {
     invalidAvatar()
   }
 
+  const { setPath } = useUserProfileEditorStore()
+  const [path] = useState(['Visuals', 'Avatar'])
+
   return (
-    <CollapseSection name="Avatar">
+    <CollapseSection name="Avatar" path={path} setPath={setPath}>
       <StyledSettingsDiv>
         <StyledSettingsField>
           <StyledSettingsLabel>Avatar image source:</StyledSettingsLabel>

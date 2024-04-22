@@ -14,7 +14,7 @@ interface ICoverPicker {
 const warning =
   'Cower should be not less than 1024/400 and not more than 2048/800 px axis'
 
-const MIN_WIDTH = 1024
+const MIN_WIDTH = 620
 const MAX_WIDTH = 4096
 
 const MIN_HEIGHT = 400

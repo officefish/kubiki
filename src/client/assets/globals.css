@@ -19,6 +19,10 @@ body {
   height: calc(100vh - 64px);
 }
 
+.h-screen-no-header-no-cover {
+  height: calc(100vh - 64px - 30rem - 1px);
+}
+
 .table-xs :not(thead):not(tfoot) tr {
   @apply text-xs;
 }

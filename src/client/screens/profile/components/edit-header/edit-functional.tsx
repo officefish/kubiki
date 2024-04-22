@@ -1,16 +1,13 @@
 import { FC, MouseEvent, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { faGear } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { useBackendAddressStore, useUserProfileStore } from '@client/providers'
 
 import { useUpdateProfile } from '@client/services/user-profile.service'
 
 //import * as bcrypt from 'bcryptjs'
 
-import { StyledFunctional, SettingsButton } from '../../styled-profile'
+import { StyledFunctional } from '../../styled-profile'
 import { IUserProfile } from '@/client/models/user.model'
 import {
   IAvatar,
@@ -99,9 +96,16 @@ const prepareUserProfileData = async (
       career: careerData,
       education: educationData,
     },
-    quote,
-    domain,
   }
+
+  if (quote.content?.length >= 5 && quote.content?.length <= 120) {
+    response['quote'] = quote
+  }
+
+  if (domain.value.length >= 4 && quote.content?.length <= 22) {
+    response['domain'] = domain
+  }
+
   /* Avatar */
   if (avatar.croppedImageUrl) {
     response['avatar'] = { imageUrl: avatar.croppedImageUrl }
@@ -154,9 +158,9 @@ const EditHeaderFunctional: FC = () => {
 
   const router = useRouter()
 
-  const settingsClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const onCancelClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    router.push('/me/settings')
+    router.push('/me')
   }
 
   const handleSaveChanges = (e: MouseEvent<HTMLButtonElement>) => {
@@ -219,7 +223,7 @@ const EditHeaderFunctional: FC = () => {
         router.push('/me')
       }
     }
-  }, [updateUserProfileResponse])
+  }, [router, updateUserProfileResponse])
 
   useEffect(() => {
     if (updateUserProfileError) {
@@ -237,15 +241,13 @@ const EditHeaderFunctional: FC = () => {
       >
         Save changes
       </button>
-      <SettingsButton
-        $active={true}
-        disabled={false}
-        type="button"
-        onClick={settingsClick}
+      <button
+        className="btn btn:ghost hover:btn-warning btn-outline text-base-content/50
+        dark:text-base-content-dark/50"
+        onClick={onCancelClick}
       >
-        Settings
-        <FontAwesomeIcon icon={faGear} />
-      </SettingsButton>
+        Cancel
+      </button>
     </StyledFunctional>
   )
 }

@@ -11,6 +11,8 @@ import {
 
 interface ICollapseSection extends PropsWithChildren {
   name: string
+  path?: string[]
+  setPath?: (path: string[]) => void
   onCollapse?: (isCollapsed: boolean) => void
 }
 
@@ -18,6 +20,8 @@ const CollapseSection: FC<ICollapseSection> = ({
   name,
   onCollapse,
   children,
+  path,
+  setPath,
 }) => {
   const { ref, isComponentOutside } = useComponentOutside(true)
   const [forseCollapse, setForseCollapse] = useState(false)
@@ -31,7 +35,13 @@ const CollapseSection: FC<ICollapseSection> = ({
       const isCollapsed = section.classList.contains('collapse-open')
       onCollapse(!isCollapsed)
     }
-  }, [isComponentOutside, click])
+  }, [isComponentOutside, click, ref, onCollapse])
+
+  useEffect(() => {
+    if (forseCollapse && path) {
+      setPath && setPath(path)
+    }
+  }, [forseCollapse, path, setPath])
 
   const clickHandle = () => {
     click.current += 1

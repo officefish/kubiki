@@ -12,8 +12,12 @@ import { useUserProfileSWR } from '@client/services/user-profile.service'
 
 //const avatar = '/public/team-2-800x800.jpg'
 import VisualsSettings from './visuals'
-import { useUserProfileStore } from '@/client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@/client/providers'
 import EditProfileLayout from '../components/edit-profile.layout'
+import CoverTartan from '../components/tartan-cover'
 //const background =
 //  'https://images.unsplash.com/photo-1499336315816-097655dcfbda'
 
@@ -65,6 +69,8 @@ const ProfileSettings: FC = () => {
     ESettingsMode.BasicInfo,
   )
 
+  const { setPath } = useUserProfileEditorStore()
+
   const handleInputMode = (
     e: MouseEvent<HTMLButtonElement> & { target: HTMLButtonElement },
   ) => {
@@ -102,10 +108,32 @@ const ProfileSettings: FC = () => {
     }
   }
 
+  useEffect(() => {
+    switch (settingsMode) {
+      case ESettingsMode.BasicInfo: {
+        setPath(['Basic Info'])
+        break
+      }
+      case ESettingsMode.Status: {
+        setPath(['Status'])
+        break
+      }
+      case ESettingsMode.Visuals: {
+        setPath(['Visuals'])
+        break
+      }
+      default: {
+        setPath(['Basic Info'])
+        break
+      }
+    }
+  }, [settingsMode, setPath])
+
   return (
     <>
       <div className="relative">
         <Cover background={userProfile?.cover?.imageUrl} />
+        <CoverTartan url={userProfile?.tartan?.url} />
         <EditProfileLayout avatar={userProfile?.avatar?.imageUrl}>
           <EditHeader />
           <Tabs>

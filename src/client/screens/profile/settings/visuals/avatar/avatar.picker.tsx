@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useRef, useState } from 'react'
 
-import Image from 'next/image'
+//import Image from 'next/image'
 
 import useGlobalOverflowHidden from '@client/hooks/force-overflow'
 import ImageCropper from '@client/components/tools/image-cropper'
@@ -70,6 +70,11 @@ export const AvatarPicker: FC<IAvatarPicker> = ({
 
   const onDialogClose = () => setIsOverflowHidden(false)
 
+  const handleImageError = (event) => {
+    event.target.onerror = null // Reset the event handler to prevent infinite loop
+    event.target.src = `/public/${imageUrl}` // Try loading the image from the fallback source
+  }
+
   return (
     <>
       <StyledAvatarPickerContainer>
@@ -80,12 +85,14 @@ export const AvatarPicker: FC<IAvatarPicker> = ({
         />
         <StyledAvatarPickerAvatar>
           <StyledAvatarPickerImgWrapper>
-            <Image
-              alt="avatar"
-              src={croppedImageUrl ? croppedImageUrl : imageUrl}
-              width={80}
-              height={80}
-            />
+            <div className="w-20 h-20 lg:w-24 lg:h-24 relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt="avatar"
+                src={croppedImageUrl ? croppedImageUrl : imageUrl}
+                onError={handleImageError}
+              />
+            </div>
           </StyledAvatarPickerImgWrapper>
         </StyledAvatarPickerAvatar>
       </StyledAvatarPickerContainer>

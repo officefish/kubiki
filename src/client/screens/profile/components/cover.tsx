@@ -29,6 +29,7 @@ const Cover: FC<ICover> = ({ background }) => {
       setSrc(url)
     }
   }, [background])
+
   return (
     <CoverWrapper>
       <CoverImage $background={src}>

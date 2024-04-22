@@ -12,7 +12,10 @@ import {
   StyledSettingsInput,
 } from '../../styled-profile'
 
-import { useUserProfileStore } from '@client/providers'
+import {
+  useUserProfileEditorStore,
+  useUserProfileStore,
+} from '@client/providers'
 
 const BasicInfoEducation: FC = () => {
   const { ref, isComponentOutside } = useComponentOutside(true)
@@ -32,9 +35,16 @@ const BasicInfoEducation: FC = () => {
     invalidEducation()
   }
 
+  const { setPath } = useUserProfileEditorStore()
   useEffect(() => {
     setForseCollapse(!isComponentOutside)
-  }, [isComponentOutside])
+  }, [isComponentOutside, setPath])
+
+  useEffect(() => {
+    if (forseCollapse) {
+      setPath(['Basic info', 'Education'])
+    }
+  }, [forseCollapse, setPath])
 
   return (
     <StyledCollapseSection ref={ref} $forceCollapse={forseCollapse}>
