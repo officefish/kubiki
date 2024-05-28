@@ -102,7 +102,7 @@ const prepareUserProfileData = async (
     response['quote'] = quote
   }
 
-  if (domain.value.length >= 4 && quote.content?.length <= 22) {
+  if (domain.value?.length >= 4 && domain.value?.length <= 22) {
     response['domain'] = domain
   }
 

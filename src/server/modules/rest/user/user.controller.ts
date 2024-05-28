@@ -262,8 +262,8 @@ export class UserController {
 
     const userProfile = {
       basicInfo: basicInfoJson,
-      quote: { content: quote.content },
-      domain: { value: domain.value },
+      quote: { content: quote?.content || '' },
+      domain: { value: domain?.value || '' },
       avatar: avatarData,
       cover: coverData,
       tartan: tartanData,
